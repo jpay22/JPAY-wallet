@@ -1,0 +1,7 @@
+{
+  "name": "JPAY - Portefeuille Crypto Haïtien",
+  "description": "Portefeuille crypto sécurisé et rapide conçu pour Haïti. Achetez, vendez et échangez des cryptos avec MonCash et les banques locales.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
