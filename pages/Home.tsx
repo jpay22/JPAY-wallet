@@ -53,7 +53,7 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
       switch (item.type) {
         case 'news':
           return (
-            <div key={item.id} className="bg-jpay-dark border border-gray-800 rounded-2xl p-0 overflow-hidden hover:border-gray-600 transition group cursor-pointer flex flex-row">
+            <div key={item.id} onClick={() => item.actionLink && onNavigate(item.actionLink)} className="bg-jpay-dark border border-gray-800 rounded-2xl p-0 overflow-hidden hover:border-gray-600 transition group cursor-pointer flex flex-row">
                  {item.imageUrl && (
                      <div className="w-24 md:w-32 bg-cover bg-center" style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
                  )}
@@ -70,7 +70,7 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
         case 'alert':
         case 'market':
           return (
-            <div key={item.id} className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 hover:bg-gray-800/50 transition cursor-pointer relative overflow-hidden">
+            <div key={item.id} className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 hover:bg-gray-800/50 transition cursor-pointer relative overflow-hidden flex flex-col justify-between">
                  <div className={`absolute top-0 left-0 w-1 h-full ${item.type === 'alert' ? 'bg-red-500' : 'bg-green-500'}`}></div>
                  <div className="flex gap-3">
                      <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${item.type === 'alert' ? 'bg-red-500/10 text-red-500' : 'bg-green-500/10 text-green-500'}`}>
@@ -81,18 +81,23 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
                              <h4 className="text-white font-bold text-sm">{item.title}</h4>
                              <span className="text-[10px] text-gray-500">{item.timestamp}</span>
                          </div>
-                         <p className="text-gray-400 text-xs mt-1">{item.description}</p>
-                         {item.actionLabel && (
-                             <button 
-                                onClick={() => item.actionLink && onNavigate(item.actionLink)}
-                                className="mt-2 text-xs font-bold flex items-center gap-1 hover:underline" 
-                                style={{ color: item.type === 'alert' ? '#ef4444' : '#22c55e'}}
-                             >
-                                 {item.actionLabel} <ArrowRight size={12}/>
-                             </button>
-                         )}
+                         <p className="text-gray-400 text-xs mt-1 leading-relaxed">{item.description}</p>
                      </div>
                  </div>
+                 {item.actionLabel && (
+                     <div className="mt-3 pl-14">
+                        <button 
+                            onClick={() => item.actionLink && onNavigate(item.actionLink)}
+                            className={`text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 w-fit ${
+                                item.type === 'alert' 
+                                ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' 
+                                : 'bg-green-500/10 text-green-500 hover:bg-green-500/20'
+                            }`}
+                        >
+                            {item.actionLabel} <ArrowRight size={12}/>
+                        </button>
+                     </div>
+                 )}
             </div>
           );
         case 'suggestion':
@@ -191,10 +196,10 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
 
         {/* Quick Actions Grid */}
         <div className="grid grid-cols-4 gap-3 mt-8 relative z-10">
-          <ActionButton icon={Download} label={t.deposit} onClick={() => onNavigate('deposit')} color="bg-jpay-yellow text-jpay-black hover:bg-white" highlight />
-          <ActionButton icon={Upload} label={t.withdraw} onClick={() => onNavigate('withdraw')} color="bg-gray-800 text-white hover:bg-gray-700" />
-          <ActionButton icon={Users} label={t.p2pAction || "P2P"} onClick={() => onNavigate('p2p')} color="bg-gray-800 text-white hover:bg-gray-700" />
-          <ActionButton icon={Send} label={t.transfer} onClick={() => onNavigate('wallet')} color="bg-gray-800 text-white hover:bg-gray-700" />
+          <ActionButton delay="0ms" icon={Download} label={t.deposit} onClick={() => onNavigate('deposit')} color="bg-jpay-yellow text-jpay-black hover:bg-white" highlight />
+          <ActionButton delay="100ms" icon={Upload} label={t.withdraw} onClick={() => onNavigate('withdraw')} color="bg-gray-800 text-white hover:bg-gray-700" />
+          <ActionButton delay="200ms" icon={Users} label={t.p2pAction || "P2P"} onClick={() => onNavigate('p2p')} color="bg-gray-800 text-white hover:bg-gray-700" />
+          <ActionButton delay="300ms" icon={Send} label={t.transfer} onClick={() => onNavigate('wallet')} color="bg-gray-800 text-white hover:bg-gray-700" />
         </div>
       </div>
 
@@ -309,9 +314,13 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
   );
 };
 
-const ActionButton: React.FC<{ icon: React.ElementType, label: string, onClick: () => void, color: string, highlight?: boolean }> = ({ icon: Icon, label, onClick, color, highlight }) => (
-  <button onClick={onClick} className="flex flex-col items-center gap-2 group w-full">
-    <div className={`w-full aspect-square md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 active:scale-90 shadow-lg ${color} ${highlight ? 'shadow-jpay-yellow/20' : 'shadow-black/50'}`}>
+const ActionButton: React.FC<{ icon: React.ElementType, label: string, onClick: () => void, color: string, highlight?: boolean, delay?: string }> = ({ icon: Icon, label, onClick, color, highlight, delay }) => (
+  <button 
+    onClick={onClick} 
+    className="flex flex-col items-center gap-2 group w-full animate-fade-in-up"
+    style={{ animationDelay: delay }}
+  >
+    <div className={`w-full aspect-square md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 transform group-hover:-translate-y-2 group-active:scale-90 shadow-lg ${color} ${highlight ? 'shadow-jpay-yellow/20' : 'shadow-black/50'}`}>
       <Icon className={`w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:-rotate-12`} strokeWidth={2.5} />
     </div>
     <span className={`text-[10px] md:text-xs font-medium ${highlight ? 'text-white' : 'text-gray-400 group-hover:text-white'}`}>{label}</span>

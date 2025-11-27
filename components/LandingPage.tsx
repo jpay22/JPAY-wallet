@@ -1,8 +1,9 @@
 
+
 import React, { useState } from 'react';
 import { TRANSLATIONS } from '../constants';
 import { Language } from '../types';
-import { ArrowRight, Smartphone, ShieldCheck, Globe, Users, Coins, Lock, Zap, CreditCard, ChevronRight } from 'lucide-react';
+import { ArrowRight, Smartphone, ShieldCheck, Globe, Users, Coins, Lock, Zap, CreditCard, ChevronRight, Phone, Mail, X, Scale } from 'lucide-react';
 import { Logo } from './Logo';
 import { AuthForm } from './AuthForm';
 
@@ -16,6 +17,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
   const t = TRANSLATIONS[lang];
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  
+  // State for Legal Modals
+  const [legalModal, setLegalModal] = useState<'terms' | 'privacy' | null>(null);
 
   const handleOpenAuth = (mode: 'login' | 'register') => {
     setAuthMode(mode);
@@ -40,6 +44,36 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
           lang={lang} 
           initialMode={authMode} 
         />
+      )}
+
+      {/* LEGAL MODAL */}
+      {legalModal && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-md animate-fade-in" onClick={() => setLegalModal(null)}></div>
+            <div className="bg-[#121212] w-full max-w-2xl rounded-3xl p-8 relative z-10 border border-gray-800 shadow-2xl animate-fade-in-up flex flex-col max-h-[85vh]">
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                        <Scale className="text-jpay-yellow" />
+                        {legalModal === 'terms' ? t.lp_terms : t.lp_privacy}
+                    </h2>
+                    <button onClick={() => setLegalModal(null)} className="p-2 hover:bg-gray-800 rounded-full transition">
+                        <X size={24} className="text-gray-400" />
+                    </button>
+                </div>
+                
+                <div className="overflow-y-auto pr-2 custom-scrollbar flex-1">
+                    <p className="text-gray-300 leading-relaxed whitespace-pre-wrap font-light">
+                        {legalModal === 'terms' ? t.legal_termsContent : t.legal_privacyContent}
+                    </p>
+                </div>
+
+                <div className="pt-6 mt-6 border-t border-gray-800 text-right">
+                    <button onClick={() => setLegalModal(null)} className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold transition">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
       )}
 
       {/* Decorative Background Elements */}
@@ -193,8 +227,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
         </div>
         <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition duration-500">
             <span className="font-bold text-2xl text-red-600 flex items-center gap-2"><Smartphone size={24}/> MonCash</span>
-            <span className="font-bold text-2xl text-red-800 flex items-center gap-2"><CreditCard size={24}/> Unibank</span>
-            <span className="font-bold text-2xl text-blue-900 flex items-center gap-2"><CreditCard size={24}/> Sogebank</span>
             <span className="font-bold text-2xl text-green-700 flex items-center gap-2"><Coins size={24}/> BNC</span>
             <span className="font-bold text-2xl text-green-500 flex items-center gap-2"><Coins size={24}/> USDT</span>
         </div>
@@ -360,6 +392,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
             <div className="col-span-1 md:col-span-1">
                 <Logo variant="full" className="h-8 w-auto mb-4" />
                 <p className="mb-6">Le portefeuille crypto de référence pour la communauté haïtienne et internationale.</p>
+                
+                <div className="mb-6 space-y-2">
+                   <a href="tel:+50941244387" className="flex items-center gap-2 text-gray-400 hover:text-jpay-yellow transition">
+                       <Phone size={14} /> +(509) 4124 - 4387
+                   </a>
+                   <a href="mailto:jpayht@gmail.com" className="flex items-center gap-2 text-gray-400 hover:text-jpay-yellow transition">
+                       <Mail size={14} /> jpayht@gmail.com
+                   </a>
+                </div>
+
                 <div className="flex space-x-4">
                     <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-jpay-yellow hover:text-black transition flex items-center justify-center cursor-pointer">
                         <Globe size={14}/>
@@ -390,9 +432,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
             <div>
                 <h3 className="text-white font-bold mb-6 text-base">Légal</h3>
                 <ul className="space-y-3">
-                    <li><a href="#" className="hover:text-jpay-yellow transition">Conditions d'utilisation</a></li>
-                    <li><a href="#" className="hover:text-jpay-yellow transition">Politique de confidentialité</a></li>
-                    <li><a href="#" className="hover:text-jpay-yellow transition">KYC & AML</a></li>
+                    <li>
+                        <button onClick={() => setLegalModal('terms')} className="hover:text-jpay-yellow transition text-left">
+                            {t.lp_terms}
+                        </button>
+                    </li>
+                    <li>
+                        <button onClick={() => setLegalModal('privacy')} className="hover:text-jpay-yellow transition text-left">
+                            {t.lp_privacy}
+                        </button>
+                    </li>
+                    <li>
+                        <a href="#" className="hover:text-jpay-yellow transition">{t.lp_kyc}</a>
+                    </li>
                 </ul>
             </div>
         </div>

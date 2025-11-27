@@ -79,13 +79,13 @@ export const Wallet: React.FC<WalletProps> = ({ assets, lang }) => {
               </div>
 
               {/* Asset Card */}
-              <div className="bg-gradient-to-b from-gray-800 to-black p-8 rounded-[2.5rem] text-center mb-8 border border-gray-700 shadow-2xl relative overflow-hidden">
+              <div className="bg-gradient-to-b from-gray-800 to-black p-8 rounded-[2.5rem] text-center mb-8 border border-gray-700 shadow-2xl relative overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:border-gray-600">
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-white/5 blur-3xl rounded-full"></div>
                   <div className="w-16 h-16 mx-auto rounded-full bg-black border border-gray-700 flex items-center justify-center text-3xl mb-4 relative z-10 shadow-lg" style={{color: selectedAsset.color}}>
                     {selectedAsset.icon}
                   </div>
                   <h2 className="text-4xl font-bold mb-1 relative z-10">{selectedAsset.balance} {selectedAsset.symbol}</h2>
-                  <p className="text-gray-400 relative z-10">≈ ${(selectedAsset.balance * selectedAsset.valueUsd).toFixed(2)} USD</p>
+                  <p className="font-sans text-[16px] text-gray-400 relative z-10">≈ ${(selectedAsset.balance * selectedAsset.valueUsd).toFixed(2)} USD</p>
               </div>
 
               {/* Tabs */}
@@ -292,7 +292,7 @@ export const Wallet: React.FC<WalletProps> = ({ assets, lang }) => {
            <div 
               key={asset.id} 
               onClick={() => setSelectedAsset(asset)}
-              className="bg-[#1a1a1a] p-5 rounded-2xl flex items-center justify-between border border-transparent hover:border-gray-700 active:scale-98 transition cursor-pointer group"
+              className="bg-[#1a1a1a] p-5 rounded-2xl flex items-center justify-between border border-transparent hover:border-gray-700 active:scale-98 transition cursor-pointer group shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.3)] hover:scale-[1.01]"
            >
               <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl bg-black border border-gray-800 shadow-md group-hover:scale-110 transition" style={{ color: asset.color }}>

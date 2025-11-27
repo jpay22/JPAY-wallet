@@ -1,4 +1,5 @@
 
+
 import { Currency, P2POffer, Transaction, UserPaymentMethod, FeedItem } from './types';
 
 export const TRANSLATIONS = {
@@ -56,7 +57,7 @@ export const TRANSLATIONS = {
     // Feed
     feedTitle: "Pour vous",
     feedSub: "Actualités et alertes personnalisées",
-    readMore: "Lire plus",
+    readMore: "Lire la suite",
     dismiss: "Masquer",
     // Cards
     cardsTitle: "Cartes JPAY",
@@ -122,6 +123,27 @@ export const TRANSLATIONS = {
     lp_services: "Services",
     lp_login: "Se connecter",
     lp_createAccount: "Créer un compte",
+    // Legal
+    lp_terms: "Conditions d'utilisation",
+    lp_privacy: "Politique de confidentialité",
+    lp_kyc: "KYC & AML",
+    legal_termsContent: `Bienvenue sur JPAY. En utilisant notre application, vous acceptez les conditions suivantes :
+
+1. Acceptation des conditions : En créant un compte, vous acceptez d'être lié par ces conditions.
+2. Éligibilité : Vous devez avoir au moins 18 ans pour utiliser JPAY.
+3. Risques : Le trading de cryptomonnaies comporte des risques financiers importants.
+4. Frais : Les frais de transaction sont indiqués avant chaque opération (ex: 5% pour Natcash).
+5. Sécurité : Vous êtes responsable de la sécurité de vos identifiants et de l'activation du 2FA.
+6. Activités interdites : Le blanchiment d'argent et le financement du terrorisme sont strictement interdits.
+
+JPAY se réserve le droit de suspendre tout compte suspect.`,
+    legal_privacyContent: `Votre vie privée est essentielle pour nous.
+
+1. Collecte de données : Nous collectons les informations nécessaires à la vérification d'identité (KYC) et au traitement des transactions (Nom, Email, Téléphone, ID).
+2. Utilisation : Vos données servent uniquement à fournir nos services et assurer la sécurité.
+3. Partage : Nous ne vendons jamais vos données. Le partage se fait uniquement avec les partenaires bancaires nécessaires à l'exécution de vos ordres.
+4. Sécurité : Toutes les données sont chiffrées (AES-256) et stockées sur des serveurs sécurisés.
+5. Vos droits : Vous pouvez demander la suppression de votre compte et de vos données à tout moment via le support.`,
     // Auth
     auth_login: "Connexion",
     auth_register: "Inscription",
@@ -257,6 +279,27 @@ export const TRANSLATIONS = {
     lp_services: "Sèvis",
     lp_login: "Konekte",
     lp_createAccount: "Kreye yon kont",
+    // Legal
+    lp_terms: "Kondisyon Itilizasyon",
+    lp_privacy: "Politik Konfidansyalite",
+    lp_kyc: "KYC & AML",
+    legal_termsContent: `Byenveni sou JPAY. Lè ou itilize aplikasyon an, ou dakò ak kondisyon sa yo:
+
+1. Akseptasyon: Lè ou kreye yon kont, ou dakò respekte règleman sa yo.
+2. Laj: Ou dwe gen omwen 18 an pou itilize JPAY.
+3. Risk: Komès kripto gen gwo risk finansye.
+4. Frè: Frè tranzaksyon yo afiche anvan chak operasyon (egz: 5% pou Natcash).
+5. Sekirite: Ou responsab sekirite modpas ou ak deklanche 2FA.
+6. Entèdiksyon: Blanchiman lajan ak finansman teworis entèdi nèt.
+
+JPAY rezève dwa pou sispann nenpòt kont sispèk.`,
+    legal_privacyContent: `Vi prive ou enpòtan pou nou.
+
+1. Done nou pran: Nou pran enfòmasyon pou verifye idantite (KYC) ak fè tranzaksyon (Non, Imèl, Telefòn, ID).
+2. Itilizasyon: Done ou yo sèvi sèlman pou bay sèvis nou yo ak garanti sekirite.
+3. Pataj: Nou pa vann done ou. Nou pataje yo sèlman ak patnè bankè ki nesesè pou lòd ou yo.
+4. Sekirite: Tout done chifre (AES-256) epi estoke sou sèvè an sekirite.
+5. Dwa ou: Ou ka mande efase kont ou ak done ou nenpòt lè nan sipò a.`,
     // Auth
     auth_login: "Koneksyon",
     auth_register: "Enskripsyon",
@@ -301,8 +344,6 @@ export const MOCK_P2P_OFFERS: P2POffer[] = [
 export const PAYMENT_METHODS = [
   { name: 'MonCash', color: 'bg-red-600', textColor: 'text-white' },
   { name: 'Natcash', color: 'bg-orange-500', textColor: 'text-white' },
-  { name: 'Unibank', color: 'bg-red-800', textColor: 'text-white' },
-  { name: 'Sogebank', color: 'bg-red-700', textColor: 'text-white' },
   { name: 'BNC', color: 'bg-green-700', textColor: 'text-white' },
   { name: 'Card', color: 'bg-blue-600', textColor: 'text-white' },
 ];
@@ -321,14 +362,25 @@ export const NOTIFICATIONS = [
 // New Mock Data for Home Feed
 export const MOCK_FEED_ITEMS: FeedItem[] = [
   {
+    id: 'market_btc_alert',
+    type: 'market',
+    title: 'Hausse Majeure sur Bitcoin 🚀',
+    description: 'Le BTC a gagné 5% au cours de la dernière heure. La valeur de votre portefeuille augmente.',
+    timestamp: 'À l\'instant',
+    relatedAssetId: 'btc',
+    priority: 'high',
+    actionLabel: 'Voir mon portefeuille',
+    actionLink: 'wallet'
+  },
+  {
     id: 'news1',
     type: 'news',
     title: 'Bitcoin dépasse les $64,000 !',
     description: 'Le marché crypto connaît un nouvel élan haussier cette semaine.',
-    timestamp: 'À l\'instant',
+    timestamp: 'Il y a 2h',
     relatedAssetId: 'btc',
     imageUrl: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=300&h=200',
-    priority: 'high'
+    priority: 'normal'
   },
   {
     id: 'sugg1',
