@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Logo } from './Logo';
 import { TRANSLATIONS } from '../constants';
 import { Language } from '../types';
-import { Mail, Lock, User, Loader2, ArrowRight, X, Phone } from 'lucide-react';
+import { Mail, Lock, User, Loader2, ArrowRight, X, ShieldAlert } from 'lucide-react';
 
 interface AuthFormProps {
-  onLogin: () => void;
+  onLogin: (isAdmin?: boolean) => void;
   onClose: () => void;
   lang: Language;
   initialMode: 'login' | 'register';
@@ -30,7 +30,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onClose, lang, init
     // Simulation of API call
     setTimeout(() => {
       setIsLoading(false);
-      onLogin(); // Trigger app login state
+      // Check for Admin Credential
+      if (formData.email.toLowerCase() === 'admin@jpay.ht') {
+          onLogin(true); // Login as Admin
+      } else {
+          onLogin(false); // Login as User
+      }
     }, 1500);
   };
 
@@ -136,8 +141,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onClose, lang, init
            )}
 
            {mode === 'login' && (
-             <div className="text-right">
-               <a href="#" className="text-xs text-gray-500 hover:text-jpay-yellow transition">{t.auth_forgotPass}</a>
+             <div className="flex justify-between items-center text-xs">
+                <button type="button" onClick={() => setFormData({...formData, email: 'admin@jpay.ht'})} className="text-gray-600 hover:text-white flex items-center gap-1">
+                   <ShieldAlert size={12}/> Admin Demo
+                </button>
+               <a href="#" className="text-gray-500 hover:text-jpay-yellow transition">{t.auth_forgotPass}</a>
              </div>
            )}
 

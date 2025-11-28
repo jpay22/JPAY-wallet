@@ -52,13 +52,13 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
 
       {/* Filters (Mock) */}
       <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white">
+        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white transition">
            <span>USDT</span>
         </button>
-        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white">
+        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white transition">
            <span>{t.amount}</span>
         </button>
-        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white">
+        <button className="flex items-center space-x-2 bg-jpay-dark border border-jpay-gray px-4 py-2 rounded-full text-sm whitespace-nowrap hover:border-jpay-yellow text-white transition">
            <span>{t.paymentMethod}</span>
         </button>
       </div>
@@ -66,10 +66,13 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
       {/* Offers List */}
       <div className="space-y-4">
         {offers.filter(o => o.type === filterType).map((offer) => (
-          <div key={offer.id} className="bg-jpay-dark border border-jpay-gray rounded-2xl p-5 hover:border-gray-500 transition">
+          <div 
+            key={offer.id} 
+            className="bg-jpay-dark border border-jpay-gray rounded-2xl p-5 transition-all duration-300 hover:border-jpay-yellow/50 hover:shadow-[0_4px_20px_-5px_rgba(252,213,53,0.15)] hover:scale-[1.01] hover:bg-gray-800/50"
+          >
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-full bg-jpay-yellow text-jpay-black font-bold flex items-center justify-center text-xs">
+                <div className="w-8 h-8 rounded-full bg-jpay-yellow text-jpay-black font-bold flex items-center justify-center text-xs shadow-md">
                   {offer.user.substring(0, 2).toUpperCase()}
                 </div>
                 <div>
@@ -114,7 +117,7 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
                </div>
                <button 
                 onClick={() => setSelectedOffer(offer)}
-                className={`px-6 py-2 rounded-lg font-bold text-sm transition transform hover:scale-105 ${filterType === 'buy' ? 'bg-green-600 hover:bg-green-500 text-white' : 'bg-red-600 hover:bg-red-500 text-white'}`}
+                className={`px-6 py-2 rounded-lg font-bold text-sm transition transform hover:scale-105 shadow-lg ${filterType === 'buy' ? 'bg-green-600 hover:bg-green-500 text-white shadow-green-900/20' : 'bg-red-600 hover:bg-red-500 text-white shadow-red-900/20'}`}
                >
                  {filterType === 'buy' ? t.buy : t.sell} {offer.crypto}
                </button>
@@ -127,11 +130,11 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
       {selectedOffer && (
         <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-4">
              <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedOffer(null)}></div>
-             <div className="bg-jpay-dark border border-gray-800 w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 relative z-10 animate-fade-in-up">
+             <div className="bg-jpay-dark border border-gray-800 w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 relative z-10 animate-fade-in-up shadow-2xl">
                  
                  {isTradeSuccess ? (
                     <div className="py-10 text-center animate-fade-in">
-                        <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500">
+                        <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500 border border-green-500/30">
                             <CheckCircle size={32} />
                         </div>
                         <h3 className="text-2xl font-bold text-white mb-2">{t.orderCreated}</h3>
@@ -144,7 +147,7 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
                                 {selectedOffer.type === 'buy' ? t.buy : t.sell} {selectedOffer.crypto}
                                 <span className="text-xs font-normal text-gray-400 bg-gray-800 px-2 py-0.5 rounded">de {selectedOffer.user}</span>
                             </h3>
-                            <button onClick={() => setSelectedOffer(null)} className="p-2 hover:bg-gray-800 rounded-full">
+                            <button onClick={() => setSelectedOffer(null)} className="p-2 hover:bg-gray-800 rounded-full transition">
                                 <X size={20} className="text-gray-400" />
                             </button>
                         </div>
@@ -167,7 +170,7 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
                                     <input 
                                         type="number" 
                                         placeholder="0.00" 
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-jpay-yellow outline-none"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-jpay-yellow outline-none transition"
                                         value={tradeAmount}
                                         onChange={(e) => setTradeAmount(e.target.value)}
                                     />
@@ -190,7 +193,7 @@ export const P2P: React.FC<P2PProps> = ({ offers, lang }) => {
                              <button 
                                 onClick={handleTradeConfirm}
                                 disabled={!tradeAmount}
-                                className={`flex-[2] py-3 rounded-xl font-bold text-white transition ${selectedOffer.type === 'buy' ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600 hover:bg-red-500'} disabled:opacity-50 disabled:cursor-not-allowed`}
+                                className={`flex-[2] py-3 rounded-xl font-bold text-white transition ${selectedOffer.type === 'buy' ? 'bg-green-600 hover:bg-green-500 shadow-lg shadow-green-900/20' : 'bg-red-600 hover:bg-red-500 shadow-lg shadow-red-900/20'} disabled:opacity-50 disabled:cursor-not-allowed`}
                              >
                                 {selectedOffer.type === 'buy' ? t.buy : t.sell}
                              </button>

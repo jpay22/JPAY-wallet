@@ -1,6 +1,5 @@
 
-
-import { Currency, P2POffer, Transaction, UserPaymentMethod, FeedItem } from './types';
+import { Currency, P2POffer, Transaction, UserPaymentMethod, FeedItem, PaymentRequest } from './types';
 
 export const TRANSLATIONS = {
   fr: {
@@ -49,6 +48,16 @@ export const TRANSLATIONS = {
     commTitle: "JPAY pour la Communauté",
     commSub: "Connecter la diaspora haïtienne au monde",
     branding: "Kit de Marque",
+    // Admin
+    adminDashboard: "Espace Administrateur",
+    pendingDeposits: "Dépôts en attente",
+    pendingWithdrawals: "Retraits en attente",
+    approve: "Approuver",
+    reject: "Refuser",
+    proofId: "ID Transaction",
+    user: "Utilisateur",
+    admin_welcome: "Bonjour, Admin",
+    admin_sub: "Gérez les flux financiers de la plateforme.",
     // New Home Elements
     bonusTitle: "Bonus d'Inscription",
     bonusDesc: "Cadeau de bienvenue crédité !",
@@ -157,7 +166,8 @@ JPAY se réserve le droit de suspendre tout compte suspect.`,
     auth_hasAccount: "Déjà un compte ?",
     auth_forgotPass: "Mot de passe oublié ?",
     auth_loading: "Vérification...",
-    auth_success: "Bienvenue sur JPAY !"
+    auth_success: "Bienvenue sur JPAY !",
+    auth_adminLink: "Accès Admin"
   },
   ht: {
     welcome: "Byenveni sou JPAY",
@@ -205,6 +215,16 @@ JPAY se réserve le droit de suspendre tout compte suspect.`,
     commTitle: "JPAY pou Kominote a",
     commSub: "Konekte dyaspora ayisyen an ak tout mond lan",
     branding: "Kit Mak la",
+     // Admin
+    adminDashboard: "Espace Administrateur",
+    pendingDeposits: "Depo k ap tann",
+    pendingWithdrawals: "Retrè k ap tann",
+    approve: "Aksepte",
+    reject: "Refize",
+    proofId: "ID Tranzaksyon",
+    user: "Itilizatè",
+    admin_welcome: "Bonjou, Admin",
+    admin_sub: "Jere tout tranzaksyon platfòm nan.",
     // New Home Elements
     bonusTitle: "Bonis Enskripsyon",
     bonusDesc: "Kado byenveni ou dispoze!",
@@ -313,7 +333,8 @@ JPAY rezève dwa pou sispann nenpòt kont sispèk.`,
     auth_hasAccount: "Ou deja gen yon kont ?",
     auth_forgotPass: "Bliye modpas la ?",
     auth_loading: "N ap verifye...",
-    auth_success: "Byenveni sou JPAY !"
+    auth_success: "Byenveni sou JPAY !",
+    auth_adminLink: "Aksè Admin"
   }
 };
 
@@ -380,7 +401,8 @@ export const MOCK_FEED_ITEMS: FeedItem[] = [
     timestamp: 'Il y a 2h',
     relatedAssetId: 'btc',
     imageUrl: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=300&h=200',
-    priority: 'normal'
+    priority: 'normal',
+    actionLink: 'wallet'
   },
   {
     id: 'sugg1',
@@ -408,6 +430,15 @@ export const MOCK_FEED_ITEMS: FeedItem[] = [
     title: 'Maintenance MonCash',
     description: 'Maintenance prévue ce soir de 23h à 01h. Veuillez anticiper vos transactions.',
     timestamp: 'Important',
-    priority: 'high'
+    priority: 'high',
+    actionLabel: 'Contacter support',
+    actionLink: 'support'
   }
+];
+
+// Mock Admin Requests
+export const MOCK_ADMIN_REQUESTS: PaymentRequest[] = [
+  { id: 'req1', userId: 'u1', userName: 'Jean Pierre', type: 'deposit', amountFiat: 15000, currencyFiat: 'HTG', amountCrypto: 110.29, currencyCrypto: 'USDT', method: 'MonCash', methodIdentifier: '3710-4422', status: 'pending', date: '2024-05-12 10:30', proofId: 'TRX-MC-998877' },
+  { id: 'req2', userId: 'u2', userName: 'Marie Claire', type: 'withdraw', amountFiat: 5000, currencyFiat: 'HTG', amountCrypto: 36.76, currencyCrypto: 'USDT', method: 'Natcash', methodIdentifier: '4000-1234', status: 'pending', date: '2024-05-12 11:15' },
+  { id: 'req3', userId: 'u3', userName: 'Paul Jacques', type: 'deposit', amountFiat: 25000, currencyFiat: 'HTG', amountCrypto: 183.82, currencyCrypto: 'USDT', method: 'BNC', methodIdentifier: '100-20-330', status: 'pending', date: '2024-05-12 09:00', proofId: 'BNC-REF-2211' },
 ];

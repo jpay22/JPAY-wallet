@@ -12,21 +12,26 @@ import { Community } from './pages/Community';
 import { Notifications } from './pages/Notifications';
 import { Branding } from './pages/Branding';
 import { PaymentMethods } from './pages/PaymentMethods';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { MOCK_ASSETS, MOCK_TRANSACTIONS, MOCK_P2P_OFFERS, TRANSLATIONS } from './constants';
 import { Language } from './types';
 import { LogOut, CheckCircle, Shield, CreditCard, Bell, ArrowUpRight, ChevronLeft } from 'lucide-react';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Admin State
   const [currentView, setCurrentView] = useState('home');
   const [lang, setLang] = useState<Language>('fr');
 
-  const handleLogin = () => {
+  const handleLogin = (adminUser = false) => {
     setIsLoggedIn(true);
+    setIsAdmin(adminUser);
+    if (adminUser) setCurrentView('admin-dashboard');
   };
 
   const handleLogout = () => {
       setIsLoggedIn(false);
+      setIsAdmin(false);
       setCurrentView('home');
   };
 
@@ -60,6 +65,8 @@ const App: React.FC = () => {
         return <Branding />;
       case 'payment-methods':
         return <PaymentMethods lang={lang} onNavigate={setCurrentView} />;
+      case 'admin-dashboard':
+        return <AdminDashboard lang={lang} />;
       case 'profile':
         return <ProfileSettings lang={lang} setLang={setLang} onLogout={handleLogout} onNavigate={setCurrentView} />;
       default:
@@ -68,7 +75,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout currentView={currentView} setCurrentView={setCurrentView} lang={lang}>
+    <Layout currentView={currentView} setCurrentView={setCurrentView} lang={lang} isAdmin={isAdmin}>
       {renderView()}
     </Layout>
   );

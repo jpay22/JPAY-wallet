@@ -4,6 +4,7 @@ import { Download, Upload, Users, Send, Bell, TrendingUp, Gift, Smartphone, Info
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import { Currency, Transaction, Language, FeedItem } from '../types';
 import { TRANSLATIONS, MOCK_P2P_OFFERS, MOCK_FEED_ITEMS } from '../constants';
+import { IllustrationInstant, IllustrationMarketplace, IllustrationSecurity, IllustrationLocalPayments } from '../components/Illustrations';
 
 interface HomeProps {
   assets: Currency[];
@@ -53,24 +54,29 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
       switch (item.type) {
         case 'news':
           return (
-            <div key={item.id} onClick={() => item.actionLink && onNavigate(item.actionLink)} className="bg-jpay-dark border border-gray-800 rounded-2xl p-0 overflow-hidden hover:border-gray-600 transition group cursor-pointer flex flex-row">
+            <div key={item.id} onClick={() => onNavigate(item.actionLink || 'home')} className="bg-jpay-dark border border-gray-800 rounded-2xl p-0 overflow-hidden hover:border-gray-600 transition group cursor-pointer flex flex-row">
                  {item.imageUrl && (
                      <div className="w-24 md:w-32 bg-cover bg-center" style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
                  )}
-                 <div className="p-4 flex-1">
-                     <div className="flex justify-between items-start mb-1">
-                         <span className="text-[10px] text-jpay-yellow font-bold uppercase tracking-wider bg-jpay-yellow/10 px-2 py-0.5 rounded">News</span>
-                         <span className="text-[10px] text-gray-500">{item.timestamp}</span>
+                 <div className="p-4 flex-1 flex flex-col justify-between">
+                     <div>
+                         <div className="flex justify-between items-start mb-1">
+                             <span className="text-[10px] text-jpay-yellow font-bold uppercase tracking-wider bg-jpay-yellow/10 px-2 py-0.5 rounded">News</span>
+                             <span className="text-[10px] text-gray-500">{item.timestamp}</span>
+                         </div>
+                         <h4 className="text-white font-bold text-sm mb-1 line-clamp-2">{item.title}</h4>
+                         <p className="text-gray-400 text-xs line-clamp-2">{item.description}</p>
                      </div>
-                     <h4 className="text-white font-bold text-sm mb-1 line-clamp-2">{item.title}</h4>
-                     <p className="text-gray-400 text-xs line-clamp-2">{item.description}</p>
+                     <button className="mt-3 text-jpay-yellow text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        {t.readMore} <ArrowRight size={12}/>
+                     </button>
                  </div>
             </div>
           );
         case 'alert':
         case 'market':
           return (
-            <div key={item.id} className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 hover:bg-gray-800/50 transition cursor-pointer relative overflow-hidden flex flex-col justify-between">
+            <div key={item.id} className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 hover:bg-gray-800/50 transition cursor-pointer relative overflow-hidden flex flex-col justify-between" onClick={() => onNavigate(item.actionLink || 'home')}>
                  <div className={`absolute top-0 left-0 w-1 h-full ${item.type === 'alert' ? 'bg-red-500' : 'bg-green-500'}`}></div>
                  <div className="flex gap-3">
                      <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${item.type === 'alert' ? 'bg-red-500/10 text-red-500' : 'bg-green-500/10 text-green-500'}`}>
@@ -84,20 +90,21 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
                          <p className="text-gray-400 text-xs mt-1 leading-relaxed">{item.description}</p>
                      </div>
                  </div>
-                 {item.actionLabel && (
-                     <div className="mt-3 pl-14">
-                        <button 
-                            onClick={() => item.actionLink && onNavigate(item.actionLink)}
-                            className={`text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 w-fit ${
-                                item.type === 'alert' 
-                                ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' 
-                                : 'bg-green-500/10 text-green-500 hover:bg-green-500/20'
-                            }`}
-                        >
-                            {item.actionLabel} <ArrowRight size={12}/>
-                        </button>
-                     </div>
-                 )}
+                 <div className="mt-3 pl-14">
+                    <button 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onNavigate(item.actionLink || 'home');
+                        }}
+                        className={`text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 w-fit ${
+                            item.type === 'alert' 
+                            ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' 
+                            : 'bg-green-500/10 text-green-500 hover:bg-green-500/20'
+                        }`}
+                    >
+                        {item.actionLabel || t.readMore} <ArrowRight size={12}/>
+                    </button>
+                 </div>
             </div>
           );
         case 'suggestion':
@@ -203,7 +210,7 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
         </div>
       </div>
 
-      {/* --- PERSONALIZED SMART FEED (NEW) --- */}
+      {/* --- PERSONALIZED SMART FEED --- */}
       <div className="space-y-4">
           <div className="flex justify-between items-center px-1">
               <div>
@@ -213,6 +220,33 @@ export const Home: React.FC<HomeProps> = ({ assets, transactions, lang, onNaviga
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredFeed.map(renderFeedItem)}
+          </div>
+      </div>
+
+       {/* --- DISCOVER JPAY SECTON (How it works visual) --- */}
+       <div className="space-y-4">
+          <h3 className="text-lg font-bold text-white px-1">Découvrez JPAY</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <DiscoverCard 
+                  icon={<IllustrationLocalPayments />}
+                  title="MonCash, Natcash & USDT"
+                  desc="Rechargez et retirez vos fonds instantanément via vos portefeuilles mobiles et USDT."
+              />
+              <DiscoverCard 
+                  icon={<IllustrationInstant />}
+                  title="Virement Instantané"
+                  desc="Transférez des fonds vers n'importe quel compte JPAY en quelques secondes, sans frais cachés."
+              />
+              <DiscoverCard 
+                  icon={<IllustrationMarketplace />}
+                  title="Marketplace P2P"
+                  desc="Achetez et vendez vos cryptos directement avec d'autres utilisateurs en toute sécurité."
+              />
+              <DiscoverCard 
+                  icon={<IllustrationSecurity />}
+                  title="Sécurité Bancaire"
+                  desc="Vos actifs sont protégés par notre technologie JPAY Shield et une vérification avancée."
+              />
           </div>
       </div>
 
@@ -325,4 +359,14 @@ const ActionButton: React.FC<{ icon: React.ElementType, label: string, onClick: 
     </div>
     <span className={`text-[10px] md:text-xs font-medium ${highlight ? 'text-white' : 'text-gray-400 group-hover:text-white'}`}>{label}</span>
   </button>
+);
+
+const DiscoverCard: React.FC<{ icon: React.ReactNode, title: string, desc: string }> = ({ icon, title, desc }) => (
+    <div className="bg-[#1a1a1a] border border-gray-800 rounded-2xl p-5 hover:border-gray-600 transition group flex flex-col h-full">
+        <div className="h-32 mb-4 rounded-xl bg-black/50 overflow-hidden relative">
+            {icon}
+        </div>
+        <h4 className="text-white font-bold mb-2 group-hover:text-jpay-yellow transition">{title}</h4>
+        <p className="text-gray-400 text-xs leading-relaxed">{desc}</p>
+    </div>
 );

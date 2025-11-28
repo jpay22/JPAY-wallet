@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Wallet, ArrowRightLeft, User, MessageCircleQuestion, Bell, Users, Plus, Palette, ScanLine, CreditCard } from 'lucide-react';
+import { Home, Wallet, ArrowRightLeft, User, MessageCircleQuestion, Bell, Users, Plus, Palette, ScanLine, CreditCard, ShieldCheck } from 'lucide-react';
 import { TRANSLATIONS } from '../constants';
 import { Language } from '../types';
 import { Logo } from './Logo';
@@ -10,9 +10,10 @@ interface LayoutProps {
   currentView: string;
   setCurrentView: (view: string) => void;
   lang: Language;
+  isAdmin?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, lang }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, lang, isAdmin }) => {
   const t = TRANSLATIONS[lang];
 
   const navItems = [
@@ -48,6 +49,22 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurren
               {item.label}
             </button>
           ))}
+          
+          {/* ADMIN LINK */}
+          {isAdmin && (
+             <button
+              onClick={() => setCurrentView('admin-dashboard')}
+              className={`flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 group mt-4 border border-jpay-yellow/30 ${
+                currentView === 'admin-dashboard' 
+                  ? 'bg-jpay-yellow/20 text-jpay-yellow font-bold' 
+                  : 'text-jpay-yellow hover:bg-jpay-yellow/10'
+              }`}
+            >
+              <ShieldCheck className="w-5 h-5 mr-3" />
+              {t.adminDashboard}
+            </button>
+          )}
+
           <div className="pt-4 mt-4 border-t border-gray-800 space-y-2">
              <button
               onClick={() => setCurrentView('support')}
@@ -125,6 +142,19 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurren
             <span className="text-[10px] font-medium tracking-wide">{item.label}</span>
           </button>
         ))}
+         {isAdmin && (
+             <button
+            onClick={() => setCurrentView('admin-dashboard')}
+            className={`flex flex-col items-center justify-center w-full space-y-1 transition-all duration-300 relative ${
+              currentView === 'admin-dashboard' ? 'text-red-500 -translate-y-1' : 'text-gray-500'
+            }`}
+          >
+             <div className={`p-1.5 rounded-xl transition-all ${currentView === 'admin-dashboard' ? 'bg-red-500/10' : 'bg-transparent'}`}>
+               <ShieldCheck className={`w-6 h-6`} />
+            </div>
+            <span className="text-[10px] font-medium tracking-wide">Admin</span>
+          </button>
+         )}
       </nav>
     </div>
   );

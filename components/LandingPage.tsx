@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { TRANSLATIONS } from '../constants';
 import { Language } from '../types';
-import { ArrowRight, Smartphone, ShieldCheck, Globe, Users, Coins, Lock, Zap, CreditCard, ChevronRight, Phone, Mail, X, Scale } from 'lucide-react';
+import { ArrowRight, Smartphone, ShieldCheck, Globe, Users, Coins, Lock, Zap, CreditCard, ChevronRight, Phone, Mail, X, Scale, TrendingUp } from 'lucide-react';
 import { Logo } from './Logo';
 import { AuthForm } from './AuthForm';
 
@@ -35,7 +35,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans overflow-x-hidden selection:bg-jpay-yellow selection:text-black">
+    <div className="min-h-screen bg-[#050505] text-white font-sans overflow-x-hidden selection:bg-jpay-yellow selection:text-black scroll-smooth">
       
       {showAuth && (
         <AuthForm 
@@ -151,72 +151,137 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, lang, setLang
           </div>
         </div>
 
-        <div className="md:w-1/2 mt-16 md:mt-0 relative flex justify-center animate-float perspective-1000">
-          {/* Mockup Phone */}
-          <div className="relative w-[320px] h-[640px] bg-black border-[8px] border-gray-800 rounded-[3rem] shadow-2xl overflow-hidden z-20 ring-1 ring-white/10 transform rotate-y-12 rotate-x-6 hover:rotate-0 transition-all duration-700 ease-out">
-             {/* Mock App UI Inside Phone */}
-             <div className="w-full h-full bg-jpay-black p-5 flex flex-col">
-                <div className="flex justify-between items-center mb-6 mt-2">
-                    <div className="flex gap-2 items-center">
-                        <Logo variant="icon" className="h-8 w-8" />
-                        <div>
-                            <div className="text-[10px] text-gray-400">Total Balance</div>
-                            <div className="text-sm font-bold">$12,450.00</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-gradient-to-br from-gray-800 to-black p-5 rounded-3xl mb-6 border border-white/5 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-jpay-yellow/10 rounded-full blur-2xl"></div>
-                    <div className="flex justify-between items-center mb-2 relative z-10">
-                         <span className="text-xs text-gray-400">Bitcoin</span>
-                         <span className="text-xs text-green-400 flex items-center"><Zap size={10} className="mr-1"/> +2.4%</span>
-                    </div>
-                    <div className="text-3xl font-bold text-white relative z-10">0.42 BTC</div>
-                    <div className="text-xs text-gray-500 relative z-10">$27,300 USD</div>
-                </div>
-                <div className="grid grid-cols-4 gap-3 mb-8">
-                    <div className="aspect-square bg-gray-900 rounded-2xl flex flex-col items-center justify-center gap-1">
-                        <div className="w-8 h-8 bg-jpay-yellow rounded-full flex items-center justify-center text-black"><ArrowRight className="w-4 h-4 -rotate-45"/></div>
-                        <div className="w-8 h-1 bg-gray-800 rounded-full"></div>
-                    </div>
-                     <div className="aspect-square bg-gray-900 rounded-2xl flex flex-col items-center justify-center gap-1">
-                        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white"><ArrowRight className="w-4 h-4 rotate-135"/></div>
-                        <div className="w-8 h-1 bg-gray-800 rounded-full"></div>
-                    </div>
-                     <div className="aspect-square bg-gray-900 rounded-2xl flex flex-col items-center justify-center gap-1">
-                        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white"><Coins className="w-4 h-4"/></div>
-                        <div className="w-8 h-1 bg-gray-800 rounded-full"></div>
-                    </div>
-                     <div className="aspect-square bg-gray-900 rounded-2xl flex flex-col items-center justify-center gap-1">
-                        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white"><Smartphone className="w-4 h-4"/></div>
-                        <div className="w-8 h-1 bg-gray-800 rounded-full"></div>
-                    </div>
-                </div>
-                <div className="flex-1 bg-gray-900/30 rounded-t-3xl p-4 space-y-4 backdrop-blur-md">
-                    <div className="h-14 bg-gray-800/50 rounded-2xl w-full flex items-center px-4 gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-500/20"></div>
-                        <div className="flex-1 space-y-2">
-                             <div className="h-2 bg-gray-700/50 rounded w-1/2"></div>
-                             <div className="h-2 bg-gray-700/50 rounded w-1/4"></div>
-                        </div>
-                    </div>
-                    <div className="h-14 bg-gray-800/50 rounded-2xl w-full flex items-center px-4 gap-3">
-                        <div className="w-8 h-8 rounded-full bg-orange-500/20"></div>
-                        <div className="flex-1 space-y-2">
-                             <div className="h-2 bg-gray-700/50 rounded w-1/3"></div>
-                             <div className="h-2 bg-gray-700/50 rounded w-1/2"></div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-             {/* Notch */}
-             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-30"></div>
+        {/* Dynamic Interactive Hero Illustration */}
+        <div className="md:w-1/2 mt-16 md:mt-0 relative flex justify-center perspective-1000 group">
+          
+          {/* Floating Elements - Coins */}
+          <div className="absolute top-10 right-10 z-30 animate-float" style={{ animationDelay: '0s' }}>
+              <div className="w-16 h-16 bg-gradient-to-br from-jpay-yellow to-orange-500 rounded-2xl shadow-2xl flex items-center justify-center transform rotate-12 group-hover:rotate-6 transition duration-700 border border-white/20 hover:scale-110">
+                  <Coins className="text-black w-8 h-8" strokeWidth={2.5} />
+              </div>
           </div>
           
-          {/* Decorative Elements behind phone */}
+          {/* Floating Elements - Credit Card */}
+          <div className="absolute bottom-32 -left-4 z-30 animate-float" style={{ animationDelay: '2s' }}>
+               <div className="w-48 h-28 bg-gradient-to-br from-[#1a1a1a] to-black rounded-xl shadow-2xl flex flex-col justify-between p-4 transform -rotate-6 group-hover:rotate-0 transition duration-700 border border-gray-700/50 hover:scale-105 backdrop-blur-md">
+                  <div className="flex justify-between items-start">
+                     <div className="w-8 h-5 bg-jpay-yellow/20 rounded"></div>
+                     <Logo variant="icon" className="h-4 w-4 opacity-50"/>
+                  </div>
+                  <div className="space-y-2">
+                     <div className="flex gap-2">
+                         <div className="h-1.5 w-8 bg-gray-700 rounded-full"></div>
+                         <div className="h-1.5 w-8 bg-gray-700 rounded-full"></div>
+                     </div>
+                     <div className="text-[10px] text-gray-500 font-mono">•••• 4291</div>
+                  </div>
+              </div>
+          </div>
+
+          {/* Floating Elements - Shield */}
+          <div className="absolute -bottom-6 right-20 z-30 animate-float" style={{ animationDelay: '1.5s' }}>
+              <div className="w-14 h-14 bg-gradient-to-tr from-green-900 to-green-600 rounded-full shadow-lg flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition duration-500 border border-green-400/30">
+                  <ShieldCheck className="text-white w-6 h-6" />
+              </div>
+          </div>
+
+          {/* Mockup Phone */}
+          <div className="relative w-[300px] h-[600px] bg-black border-[8px] border-gray-800 rounded-[3rem] shadow-2xl overflow-hidden z-20 ring-1 ring-white/10 transform rotate-y-12 rotate-x-6 group-hover:rotate-y-0 group-hover:rotate-x-0 transition-all duration-700 ease-out shadow-jpay-yellow/5">
+             
+             {/* Screen Glare */}
+             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition duration-700 transform translate-x-full group-hover:-translate-x-full"></div>
+
+             {/* Mock App UI Inside Phone */}
+             <div className="w-full h-full bg-jpay-black p-5 flex flex-col font-sans select-none">
+                {/* Status Bar */}
+                <div className="flex justify-between items-center mb-6 mt-2 opacity-80">
+                    <div className="text-[10px] font-bold text-white">9:41</div>
+                    <div className="flex gap-1">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                </div>
+
+                {/* Header */}
+                <div className="flex justify-between items-center mb-6">
+                    <div className="flex gap-3 items-center">
+                        <div className="w-8 h-8 rounded-full bg-jpay-yellow flex items-center justify-center text-black font-bold text-xs">JP</div>
+                        <div>
+                            <div className="text-[10px] text-gray-400">Total Balance</div>
+                            <div className="text-sm font-bold text-white group-hover:text-jpay-yellow transition">$12,450.00</div>
+                        </div>
+                    </div>
+                    <div className="p-2 bg-gray-800 rounded-full relative">
+                        <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-black"></div>
+                        <Zap size={16} className="text-white"/>
+                    </div>
+                </div>
+
+                {/* Main Card - Animated */}
+                <div className="bg-gradient-to-br from-gray-800 to-black p-5 rounded-3xl mb-6 border border-white/5 relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(252,213,53,0.15)] transition duration-500">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-jpay-yellow/10 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="flex justify-between items-center mb-4 relative z-10">
+                         <div className="flex items-center gap-2">
+                             <div className="w-6 h-6 rounded-full bg-[#F7931A] flex items-center justify-center text-[10px] font-bold">₿</div>
+                             <span className="text-xs text-white font-bold">Bitcoin</span>
+                         </div>
+                         <span className="text-xs text-green-400 flex items-center bg-green-900/20 px-2 py-0.5 rounded-lg"><TrendingUp size={10} className="mr-1"/> +2.4%</span>
+                    </div>
+                    <div className="text-3xl font-bold text-white relative z-10 mb-1">0.42 BTC</div>
+                    <div className="text-xs text-gray-500 relative z-10">$27,300.50 USD</div>
+                    
+                    {/* Tiny Chart Line */}
+                    <div className="mt-4 h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-jpay-yellow w-2/3 animate-[pulse_2s_infinite]"></div>
+                    </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="grid grid-cols-4 gap-3 mb-8">
+                    {[
+                        { icon: ArrowRight, label: 'Send', rotate: '-45deg' },
+                        { icon: ArrowRight, label: 'Recv', rotate: '135deg' },
+                        { icon: Coins, label: 'Buy', rotate: '0' },
+                        { icon: Smartphone, label: 'Topup', rotate: '0' }
+                    ].map((item, i) => (
+                         <div key={i} className="flex flex-col items-center gap-2 group/icon">
+                            <div className="w-12 h-12 bg-gray-900 rounded-2xl flex items-center justify-center text-white border border-gray-800 group-hover/icon:bg-jpay-yellow group-hover/icon:text-black transition duration-300">
+                                <item.icon className="w-5 h-5" style={{ transform: `rotate(${item.rotate})` }}/>
+                            </div>
+                            <div className="h-1 w-8 bg-gray-800 rounded-full group-hover/icon:bg-gray-700 transition"></div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Recent Activity List */}
+                <div className="flex-1 bg-gray-900/50 rounded-t-3xl p-4 space-y-4 backdrop-blur-md border-t border-white/5">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-white">Recent Activity</span>
+                        <span className="text-[10px] text-jpay-yellow">View All</span>
+                    </div>
+                    {[1, 2, 3].map((_, i) => (
+                        <div key={i} className="flex items-center gap-3 p-2 hover:bg-white/5 rounded-xl transition">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${i === 0 ? 'bg-green-500/20 text-green-500' : 'bg-blue-500/20 text-blue-500'}`}>
+                                {i === 0 ? <ArrowRight className="rotate-135 w-4 h-4"/> : <Zap className="w-4 h-4"/>}
+                            </div>
+                            <div className="flex-1">
+                                <div className="h-2 bg-gray-700/50 rounded w-1/2 mb-1.5"></div>
+                                <div className="h-1.5 bg-gray-700/30 rounded w-1/4"></div>
+                            </div>
+                            <div className="h-3 w-12 bg-gray-700/50 rounded"></div>
+                        </div>
+                    ))}
+                </div>
+             </div>
+             
+             {/* Notch */}
+             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-30 flex items-center justify-center">
+                 <div className="w-16 h-1 bg-gray-900 rounded-full"></div>
+             </div>
+          </div>
+          
+          {/* Background decoration behind phone */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-tr from-jpay-yellow to-orange-500 rounded-full blur-[100px] opacity-20 -z-10 animate-pulse"></div>
-          <div className="absolute bottom-10 -right-10 w-32 h-32 bg-jpay-blue rounded-full blur-2xl opacity-40"></div>
-          <div className="absolute top-20 -left-10 w-24 h-24 bg-jpay-red rounded-full blur-2xl opacity-40"></div>
         </div>
       </section>
 

@@ -63,3 +63,20 @@ export interface FeedItem {
   actionLabel?: string;
   actionLink?: string;
 }
+
+// Admin Types
+export interface PaymentRequest {
+  id: string;
+  userId: string;
+  userName: string;
+  type: 'deposit' | 'withdraw'; // Dépôt (User envoie HTG) ou Retrait (User reçoit HTG)
+  amountFiat: number;
+  currencyFiat: string;
+  amountCrypto: number;
+  currencyCrypto: string;
+  method: string; // MonCash, Natcash, Bank
+  methodIdentifier: string; // Phone number or Account
+  status: 'pending' | 'approved' | 'rejected';
+  date: string;
+  proofId?: string; // Transaction ID from MonCash/Natcash provided by user
+}

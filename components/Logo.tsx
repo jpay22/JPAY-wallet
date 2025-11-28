@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface LogoProps {
@@ -12,16 +13,20 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', className = "h-10"
   const blue = "#00205B";
   const red = "#D21034";
   const dark = "#121212";
-  const text = lightMode ? "#121212" : "#FFFFFF";
   
-  // If monochrome, we use 'currentColor' for everything
+  // Logic: 
+  // - If monochrome: everything is currentColor.
+  // - If lightMode (white bg): Text is Dark, Icon Primary is Yellow.
+  // - Default (dark bg): Text is Yellow (Updated), Icon Primary is Yellow.
+  
   const fillPrimary = monochrome ? 'currentColor' : yellow;
   const fillSecondary = monochrome ? 'currentColor' : blue;
   const fillTertiary = monochrome ? 'currentColor' : red;
   const fillBase = monochrome ? 'currentColor' : dark;
-  const fillText = monochrome ? 'currentColor' : text;
   
-  // Stroke needs to be handled carefully. If monochrome, likely want stroke to be transparent or specific contrast
+  // Update: Text is now Yellow in dark mode for stronger branding
+  const fillText = monochrome ? 'currentColor' : (lightMode ? dark : yellow);
+  
   const strokeColor = monochrome ? 'currentColor' : yellow;
 
   return (
@@ -47,11 +52,11 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', className = "h-10"
           fill={fillPrimary}
         />
         
-        {/* Haitian Flag Accents - Hidden in monochrome to keep it clean, or same color */}
+        {/* Haitian Flag Accents - More vibrant opacity */}
         {!monochrome && (
           <>
-            <path d="M5 15 L15 20 L5 25 V15Z" fill={fillSecondary} opacity="0.9" />
-            <path d="M55 15 L45 20 L55 25 V15Z" fill={fillTertiary} opacity="0.9" />
+            <path d="M5 15 L15 20 L5 25 V15Z" fill={fillSecondary} opacity="1" />
+            <path d="M55 15 L45 20 L55 25 V15Z" fill={fillTertiary} opacity="1" />
           </>
         )}
       </g>
@@ -68,8 +73,8 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', className = "h-10"
           {/* Y */}
           <path d="M88 10 L98 28 L108 10 H118 L102 36 V48 H94 V36 L78 10 H88Z" fill={fillText} />
           
-          {/* Dot Accent */}
-          <circle cx="124" cy="44" r="4" fill={fillPrimary} />
+          {/* Dot Accent - Blue in Lightmode, White in Darkmode to contrast with Yellow text */}
+          <circle cx="124" cy="44" r="4" fill={lightMode ? blue : '#FFFFFF'} />
         </g>
       )}
     </svg>
